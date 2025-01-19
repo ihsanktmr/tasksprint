@@ -2,7 +2,6 @@ import { I18n } from "i18n-js";
 import { MMKV } from "react-native-mmkv";
 
 import en from "./en";
-import tr from "./tr";
 
 // Initialize I18n
 export const i18n = new I18n();
@@ -13,7 +12,6 @@ const storage = new MMKV();
 // Load translations
 i18n.translations = {
   en,
-  tr,
 };
 
 i18n.enableFallback = true;
