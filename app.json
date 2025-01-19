@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "xpostarter",
-    "slug": "xpostarter",
+    "name": "TaskSprint",
+    "slug": "tasksprint",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "ts",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "bundleIdentifier": "com.lifeyapps.xpostarter",
+      "bundleIdentifier": "com.tasksprint",
       "supportsTablet": false,
       "infoPlist": {
         "NSAppTransportSecurity": {
@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.lifeyapps.xpostarter"
+      "package": "com.tasksprint"
     },
     "plugins": [
       [

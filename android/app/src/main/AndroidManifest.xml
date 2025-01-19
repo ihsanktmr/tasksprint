@@ -24,8 +24,8 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="myapp"/>
-        <data android:scheme="com.lifeyapps.xpostarter"/>
+        <data android:scheme="ts"/>
+        <data android:scheme="com.tasksprint"/>
       </intent-filter>
     </activity>
   </application>

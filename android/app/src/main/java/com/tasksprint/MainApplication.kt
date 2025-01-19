@@ -1,4 +1,4 @@
-package com.lifeyapps.xpostarter
+package com.tasksprint
 
 import android.app.Application
 import android.content.res.Configuration
