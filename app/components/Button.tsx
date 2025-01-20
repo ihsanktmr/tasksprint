@@ -1,8 +1,9 @@
 import React, { FC } from "react";
 
 import { distances } from "app/aesthetic/distances";
-import { borderRadii, iconVariants } from "app/aesthetic/styleConstants";
+import { radii } from "app/aesthetic/radius";
 import { typography } from "app/aesthetic/typography";
+import { iconVariants } from "app/aesthetic/variables";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import {
   ActivityIndicator,
@@ -64,7 +65,7 @@ export const Button: FC<Props> = ({
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: borderRadii.large,
+    borderRadius: radii.lg,
     height: 48,
     justifyContent: "center",
     marginVertical: distances.sm,

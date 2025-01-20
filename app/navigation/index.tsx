@@ -1,34 +1,54 @@
-// In App.js in a new project
-import * as React from "react";
+import React from "react";
 
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HomeScreen } from "app/screens/HomeScreen";
-import { NotificationsScreen } from "app/screens/NotificationsScreen";
+import { HomeScreen } from "app/screens/Home";
+import { NotificationsScreen } from "app/screens/Notifications";
 
-const Stack = createNativeStackNavigator();
+type BottomTabParamList = {
+  Home: undefined;
+  Notifications: undefined;
+};
 
-function RootStack() {
+export type HomeScreenNavigationProp = BottomTabNavigationProp<
+  BottomTabParamList,
+  "Home"
+>;
+
+export type RootStackParamList = {
+  Home: { userId: string };
+  Notifications: { isRead: boolean };
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const RootStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{ headerShown: false }}
+        initialParams={{ userId: "defaultUserId" }}
       />
       <Stack.Screen
         name="Notifications"
         component={NotificationsScreen}
-        options={{ headerShown: false }}
+        initialParams={{ isRead: false }}
       />
     </Stack.Navigator>
   );
-}
+};
 
-export function AppNavigator() {
+export const AppNavigator = () => {
   return (
     <NavigationContainer>
       <RootStack />
     </NavigationContainer>
   );
-}
+};

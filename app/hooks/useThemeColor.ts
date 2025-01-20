@@ -1,5 +1,5 @@
 import { Colors } from "app/aesthetic/colors";
-import { selectTheme } from "app/redux/theme/selectors";
+import { selectTheme } from "app/state/theme/selectors";
 import { useSelector } from "react-redux";
 
 type ThemeKey = keyof (typeof Colors)["light"]; // Key from the Colors object

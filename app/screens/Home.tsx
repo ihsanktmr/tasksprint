@@ -2,14 +2,21 @@ import React, { useEffect, useState } from "react";
 
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Header } from "app/components/common/Header";
-import { InternetModal } from "app/components/modals/InternetModal";
+import { Header } from "app/components/Header";
+import { InternetModal } from "app/components/InternetModal";
+import { ThemedView } from "app/components/ThemedView";
+import { SCREEN } from "app/constants";
 import { useThemeColor } from "app/hooks/useThemeColor";
+import { HomeScreenNavigationProp } from "app/navigation";
 import { isConnected, setupConnectivityListener } from "app/utils/netCheck";
+import { Platform } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export function HomeScreen() {
   const iconColor = useThemeColor("background");
-  const navigation = useNavigation();
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+
+  const insets = useSafeAreaInsets();
 
   const [internetModalVisible, setInternetModalVisible] = useState(false);
 
@@ -36,11 +43,23 @@ export function HomeScreen() {
   };
 
   const handleRightPress = () => {
-    navigation.navigate("Notifications");
+    navigation.navigate(SCREEN.HOME);
   };
 
   return (
-    <>
+    <ThemedView
+      style={{
+        flex: 1,
+        ...Platform.select({
+          ios: {
+            paddingTop: insets.top,
+          },
+          android: {
+            paddingTop: 10,
+          },
+        }),
+      }}
+    >
       <Header
         title="Home"
         leftIcon={<Ionicons name="menu" size={24} color={iconColor} />}
@@ -56,6 +75,6 @@ export function HomeScreen() {
         onRetry={retryConnection}
         onDismiss={() => setInternetModalVisible(false)}
       />
-    </>
+    </ThemedView>
   );
 }

@@ -1,3 +1,3 @@
 export interface LanguageState {
-  language: "en" | "tr";
+  language: "en";
 }

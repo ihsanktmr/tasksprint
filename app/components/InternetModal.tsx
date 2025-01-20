@@ -1,10 +1,10 @@
 import React from "react";
 
 import { distances } from "app/aesthetic/distances";
-import { borderRadii } from "app/aesthetic/styleConstants";
-import { ThemedText } from "app/components/texts/ThemedText";
+import { radii } from "app/aesthetic/radius";
+import { ThemedText } from "app/components/ThemedText";
 import { useThemeColor } from "app/hooks/useThemeColor";
-import { i18n } from "app/language";
+import { i18n } from "app/locale";
 import { StyleSheet, View } from "react-native";
 import { Button, Modal } from "react-native-paper";
 
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     width: "80%",
     marginHorizontal: distances.md,
     padding: distances.md,
-    borderRadius: borderRadii.large,
+    borderRadius: radii.lg,
   },
   modalStyle: {
     justifyContent: "center",

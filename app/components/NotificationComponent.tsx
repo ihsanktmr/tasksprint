@@ -2,10 +2,11 @@ import React from "react";
 
 import { Ionicons } from "@expo/vector-icons";
 import { distances } from "app/aesthetic/distances";
-import { borderRadii } from "app/aesthetic/styleConstants";
+import { radii } from "app/aesthetic/radius";
 import { typography } from "app/aesthetic/typography";
-import { ThemedView } from "app/components/containers/ThemedView";
-import { ThemedText } from "app/components/texts/ThemedText";
+import { ThemedText } from "app/components/ThemedText";
+import { ThemedView } from "app/components/ThemedView";
+import { IoniconName } from "app/constants/types";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
@@ -13,7 +14,7 @@ interface Notification {
   id: string;
   message: string;
   timestamp: string; // ISO string
-  iconName: string;
+  iconName: IoniconName;
 }
 
 interface NotificationComponentProps {
@@ -25,14 +26,14 @@ const NotificationComponent: React.FC<NotificationComponentProps> = ({
 }) => {
   const textColor = useThemeColor("text");
   const iconColor = useThemeColor("icon");
-
+  const { iconName } = notification;
   const formattedTimestamp = new Date(notification.timestamp).toLocaleString(); // Adjust formatting as needed
 
   return (
     <TouchableOpacity style={styles.notificationItem}>
       <ThemedView style={styles.notificationItemInner}>
         <Ionicons
-          name={notification.iconName}
+          name={iconName as IoniconName}
           size={24}
           color={iconColor}
           style={styles.icon}
@@ -50,7 +51,7 @@ const NotificationComponent: React.FC<NotificationComponentProps> = ({
 
 const styles = StyleSheet.create({
   notificationItem: {
-    borderRadius: borderRadii.medium,
+    borderRadius: radii.md,
     padding: distances.md,
     marginBottom: distances.sm,
     flexDirection: "row",

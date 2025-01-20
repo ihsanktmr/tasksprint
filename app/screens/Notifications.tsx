@@ -2,8 +2,8 @@ import React from "react";
 
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Header } from "app/components/common/Header";
-import NotificationList from "app/components/lists/notification/NotificationList";
+import { Header } from "app/components/Header";
+import NotificationList from "app/components/NotificationList";
 import { useThemeColor } from "app/hooks/useThemeColor";
 
 const mockNotifications = [

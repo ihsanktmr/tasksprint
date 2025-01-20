@@ -3,10 +3,11 @@ import React, { useEffect } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { LogBox, useColorScheme } from "react-native";
+import { LogBox, View, useColorScheme } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { customFontsToLoad } from "./aesthetic/typography";
-import { Providers } from "./components/common/Providers";
+import { Providers } from "./components/Providers";
 import { AppNavigator } from "./navigation";
 
 // Prevent the splash screen from hiding prematurely
@@ -16,6 +17,7 @@ LogBox.ignoreAllLogs();
 export default function App() {
   const [loaded] = useFonts(customFontsToLoad);
   const colorScheme = useColorScheme();
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     if (loaded) {
@@ -29,8 +31,16 @@ export default function App() {
 
   return (
     <Providers>
-      <AppNavigator />
-      <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+      <View
+        style={{
+          flex: 1,
+          marginTop: -insets.top,
+          marginBottom: -insets.bottom,
+        }}
+      >
+        <AppNavigator />
+      </View>
+      <StatusBar style={colorScheme === "dark" ? "dark" : "light"} />
     </Providers>
   );
 }

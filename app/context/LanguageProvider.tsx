@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 
-import { getLocale, setLocale } from "app/language/i18n";
+import { getLocale, setLocale } from "app/locale/i18n";
 
 interface LanguageContextProps {
   language: string;

@@ -1,6 +1,6 @@
 import React, { ReactNode, createContext, useContext, useState } from "react";
 
-import SnackbarComponent from "app/components/common/SnackbarComponent";
+import SnackbarComponent from "app/components/SnackbarComponent";
 
 interface SnackbarContextType {
   showSnackbar: (
