@@ -43,8 +43,8 @@ export function HomeScreen() {
   };
 
   const handleRightPress = () => {
-    navigation.navigate(SCREEN.HOME);
-  };
+    navigation.navigate(SCREEN.NOTIFICATIONS);
+  }; 4
 
   return (
     <ThemedView

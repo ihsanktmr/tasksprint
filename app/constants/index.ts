@@ -1,4 +1,4 @@
 export const SCREEN = {
   HOME: "Home",
-  NOTIFICATION: "Notification",
+  NOTIFICATIONS: "Notifications",
 } as const;

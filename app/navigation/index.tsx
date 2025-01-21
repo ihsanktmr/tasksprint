@@ -3,6 +3,7 @@ import React from "react";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SCREEN } from "app/constants";
 import { HomeScreen } from "app/screens/Home";
 import { NotificationsScreen } from "app/screens/Notifications";
 
@@ -32,12 +33,12 @@ const RootStack = () => {
       }}
     >
       <Stack.Screen
-        name="Home"
+        name={SCREEN.HOME}
         component={HomeScreen}
         initialParams={{ userId: "defaultUserId" }}
       />
       <Stack.Screen
-        name="Notifications"
+        name={SCREEN.NOTIFICATIONS}
         component={NotificationsScreen}
         initialParams={{ isRead: false }}
       />
