@@ -1,4 +1,4 @@
-import { Colors } from "app/aesthetic/colors";
+import { Colors } from "app/constants/theme";
 import { selectTheme } from "app/state/theme/selectors";
 import { useSelector } from "react-redux";
 

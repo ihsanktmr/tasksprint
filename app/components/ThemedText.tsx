@@ -1,7 +1,7 @@
-import { Colors } from "app/aesthetic/colors";
-import { typography } from "app/aesthetic/typography";
+import { typography } from "app/constants/theme";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { StyleSheet, Text, TextProps } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export type ThemedTextProps = TextProps & {
   colorKey?: keyof (typeof Colors)["light"];

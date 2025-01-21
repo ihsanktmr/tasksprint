@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { distances } from "app/aesthetic/distances";
+import { distances } from "app/constants/theme";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
 

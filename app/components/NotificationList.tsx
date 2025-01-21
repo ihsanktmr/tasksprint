@@ -1,7 +1,7 @@
 import React from "react";
 
-import { typography } from "app/aesthetic/typography";
 import { ThemedText } from "app/components/ThemedText";
+import { typography } from "app/constants/theme";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { FlatList, StyleSheet } from "react-native";
 

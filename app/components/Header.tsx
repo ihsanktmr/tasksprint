@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { typography } from "app/aesthetic/typography";
+import { typography } from "app/constants/theme";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 

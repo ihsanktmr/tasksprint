@@ -6,8 +6,8 @@ import { StatusBar } from "expo-status-bar";
 import { LogBox, View, useColorScheme } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { customFontsToLoad } from "./aesthetic/typography";
 import { Providers } from "./components/Providers";
+import { customFontsToLoad } from "./constants/theme";
 import { AppNavigator } from "./navigation";
 
 // Prevent the splash screen from hiding prematurely

@@ -1,8 +1,7 @@
 import React from "react";
 
-import { distances } from "app/aesthetic/distances";
-import { radii } from "app/aesthetic/radius";
 import { ThemedText } from "app/components/ThemedText";
+import { distances, radii } from "app/constants/theme";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { i18n } from "app/locale";
 import { StyleSheet, View } from "react-native";

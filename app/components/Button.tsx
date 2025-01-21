@@ -1,9 +1,11 @@
 import React, { FC } from "react";
 
-import { distances } from "app/aesthetic/distances";
-import { radii } from "app/aesthetic/radius";
-import { typography } from "app/aesthetic/typography";
-import { iconVariants } from "app/aesthetic/variables";
+import {
+  distances,
+  iconVariants,
+  radii,
+  typography,
+} from "app/constants/theme";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import {
   ActivityIndicator,

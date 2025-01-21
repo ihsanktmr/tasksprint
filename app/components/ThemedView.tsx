@@ -1,4 +1,4 @@
-import { Colors } from "app/aesthetic/colors";
+import { Colors } from "app/constants/theme";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { View, ViewProps } from "react-native";
 

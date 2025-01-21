@@ -1,11 +1,9 @@
 import React from "react";
 
 import { Ionicons } from "@expo/vector-icons";
-import { distances } from "app/aesthetic/distances";
-import { radii } from "app/aesthetic/radius";
-import { typography } from "app/aesthetic/typography";
 import { ThemedText } from "app/components/ThemedText";
 import { ThemedView } from "app/components/ThemedView";
+import { distances, radii, typography } from "app/constants/theme";
 import { IoniconName } from "app/constants/types";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { StyleSheet, TouchableOpacity } from "react-native";
