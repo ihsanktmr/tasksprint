@@ -95,7 +95,7 @@ export function OnboardingScreen() {
 
       <ThemedView style={styles.buttonContainer}>
         <Button
-          text={i18n.t("discover")}
+          text={i18n.t("begin")}
           onPress={handleNextPress}
           rightIcon={
             <Ionicons name="arrow-forward" size={24} color={iconColor} />

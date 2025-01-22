@@ -68,7 +68,7 @@ const RootStack = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={hasSeenOnboarding ? SCREEN.DRAWER : SCREEN.ONBOARDING}
+      initialRouteName={!hasSeenOnboarding ? SCREEN.DRAWER : SCREEN.ONBOARDING}
       screenOptions={{
         headerShown: false,
       }}

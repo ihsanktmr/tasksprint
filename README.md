@@ -6,14 +6,11 @@ A customizable task timer that helps you stay focused and organized while managi
 
 ### Key Features
 
-- **Pomodoro Timer**: Customizable work and break intervals (e.g., 25 min focus, 5 min break).
-- **Visual Timer**: Choose between a circular or progress bar timer.
+- **Timer**: Customizable work and break intervals (e.g., 25 min focus, 5 min break).
 - **Gentle Notifications**: Sound notifications for breaks and work sessions.
-- **Task Management**:
-  - Create and manage tasks directly in the app.
-  - Categorize tasks as "Today", "Upcoming", or "Completed".
-  - Drag-and-drop functionality to prioritize tasks.
-- **Focus Analytics**: Track your time spent on tasks and see weekly summaries of your progress.
+- **Focus Management**:
+  - Create and manage your focuses directly in the app.
+  - Track your time spent on tasks and see weekly summaries of your progress.
 - **Offline-First Design**: Works without an internet connection; syncs tasks using Firebase when you're online.
 - **Custom Themes and UI Options**: Light and dark modes, with an intuitive and modern user interface.
 
