@@ -1,14 +1,18 @@
 import React, { FC } from "react";
 
 import { Ionicons } from "@expo/vector-icons";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { DrawerItem } from "@react-navigation/drawer";
+import { SCREEN } from "app/constants";
 import {
   distances,
   genericSpacing,
   radii,
   typography,
 } from "app/constants/theme";
-import { Alert, Image, StyleSheet, Text, View } from "react-native";
+import { shareApp } from "app/utils/share";
+import { Image, Linking, StyleSheet, Text, View } from "react-native";
 import { Divider } from "react-native-paper";
 
 interface Props {
@@ -16,6 +20,22 @@ interface Props {
 }
 
 export const TSDrawer: FC<Props> = (props: any) => {
+  const handleRate = () => {
+    console.log("");
+  };
+
+  const handleShare = () => {
+    shareApp();
+  };
+
+  const handleInstagram = async () => {
+    try {
+      await Linking.openURL("instagram://user?username=xxxxx");
+    } catch (e) {
+      await Linking.openURL("https://www.instagram.com/xxxxx/");
+    }
+  };
+
   return (
     <View style={styles.drawerContainer}>
       <Image
@@ -31,36 +51,60 @@ export const TSDrawer: FC<Props> = (props: any) => {
       <View style={{ height: 10 }} />
       <View style={styles.drawerItemContainer}>
         <DrawerItem
-          label="Admin"
+          label="Timer"
           onPress={() => {
-            props.navigation.navigate("AdminStack");
+            props.navigation.navigate(SCREEN.HOME);
           }}
           icon={() => (
             <View style={styles.drawerItemIconContainer}>
-              <Ionicons name="home" size={24} color={"black"} />
+              <Ionicons name="timer-outline" size={24} color="black" />
             </View>
           )}
         />
         <DrawerItem
-          label="Anasayfa"
+          label="Focus Log"
           onPress={() => {
             props.navigation.navigate("Home");
           }}
           icon={() => (
             <View style={styles.drawerItemIconContainer}>
-              <Ionicons name="home" size={24} color={"black"} />
+              <MaterialIcons
+                name="center-focus-strong"
+                size={24}
+                color="black"
+              />
+            </View>
+          )}
+        />
+        <View style={{ height: 15 }} />
+
+        <DrawerItem
+          label="Share"
+          labelStyle={styles.drawerLabelText}
+          onPress={handleShare}
+          icon={() => (
+            <View style={styles.drawerItemIconContainer}>
+              <Ionicons name="share" size={24} color={"black"} />
             </View>
           )}
         />
         <DrawerItem
-          label="Dil Değiştir"
+          label="Rate"
           labelStyle={styles.drawerLabelText}
-          onPress={() => {
-            Alert.alert("Dil Değiştir", "Yapım Aşamasında!");
-          }}
+          onPress={handleRate}
           icon={() => (
             <View style={styles.drawerItemIconContainer}>
-              <Ionicons name="home" size={24} color={"black"} />
+              <Ionicons name="star" size={24} color={"black"} />
+            </View>
+          )}
+        />
+        <DrawerItem
+          label="Instagram"
+          labelStyle={styles.drawerLabelText}
+          onPress={handleInstagram}
+          icon={() => (
+            <View style={styles.drawerItemIconContainer}>
+              <Ionicons name="logo-instagram" size={24} color={"black"} />
             </View>
           )}
         />
@@ -70,12 +114,31 @@ export const TSDrawer: FC<Props> = (props: any) => {
         <Divider />
 
         <View style={{ flex: 1 }} />
+        {__DEV__ && (
+          <DrawerItem
+            label="Reset (Dev only)"
+            onPress={() => null}
+            icon={() => (
+              <View style={styles.drawerItemIconContainer}>
+                <MaterialCommunityIcons
+                  name="lock-reset"
+                  size={24}
+                  color="black"
+                />
+              </View>
+            )}
+          />
+        )}
         <DrawerItem
-          label="Kullanıcıyı Sil"
+          label="About"
           onPress={() => null}
           icon={() => (
             <View style={styles.drawerItemIconContainer}>
-              <Ionicons name="home" size={24} color={"black"} />
+              <Ionicons
+                name="information-circle-outline"
+                size={24}
+                color="black"
+              />
             </View>
           )}
         />
@@ -113,8 +176,8 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: radii.full,
-    width: 22,
-    height: 22,
+    width: 40,
+    height: 40,
     marginBottom: distances.xl,
   },
   drawerItemIconContainer: {},
