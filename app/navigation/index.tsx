@@ -11,9 +11,10 @@ import {
 } from "@react-navigation/native-stack";
 import { TSDrawer } from "app/components/TSDrawer";
 import { SCREEN } from "app/constants";
-import { HomeScreen } from "app/screens/Home";
-import { NotificationsScreen } from "app/screens/Notifications";
+import { FocusLogsScreen } from "app/screens/FocusLogs";
 import { OnboardingScreen } from "app/screens/Onboarding";
+import { TasksScreen } from "app/screens/Tasks";
+import { TimerScreen } from "app/screens/Timer";
 import { selectIsOnboardingSeen } from "app/state/misc/selectors";
 import { useSelector } from "react-redux";
 
@@ -23,20 +24,19 @@ export type OnboardingScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 export type HomeScreenNavigationProp = DrawerNavigationProp<
-  RoofStackParamList,
-  "Home"
+  DrawerParamList,
+  "Timer"
 >;
 
 type RoofStackParamList = {
   Onboarding: undefined;
   Drawer: DrawerParamList | undefined;
-  Home: undefined;
-  Notifications: undefined;
 };
 
 type DrawerParamList = {
-  Home: undefined;
-  Notifications: undefined;
+  Tasks: undefined;
+  Timer: undefined;
+  Focuslogs: undefined;
 };
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
@@ -47,17 +47,22 @@ function MainDrawer() {
   return (
     <Drawer.Navigator
       drawerContent={(props: any) => <TSDrawer {...props} />}
-      initialRouteName={SCREEN.HOME}
+      initialRouteName={SCREEN.TIMER}
     >
       <Drawer.Screen
         options={{ headerShown: false }}
-        name={SCREEN.HOME}
-        component={HomeScreen}
+        name={SCREEN.FOCUSLOGS}
+        component={FocusLogsScreen}
       />
       <Drawer.Screen
+        name={SCREEN.TASKS}
+        component={TasksScreen}
         options={{ headerShown: false }}
-        name={SCREEN.NOTIFICATIONS}
-        component={NotificationsScreen}
+      />
+      <Drawer.Screen
+        name={SCREEN.TIMER}
+        component={TimerScreen}
+        options={{ headerShown: false }}
       />
     </Drawer.Navigator>
   );
@@ -78,11 +83,7 @@ const RootStack = () => {
         component={OnboardingScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name={SCREEN.HOME}
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
+
       <Stack.Screen name={SCREEN.DRAWER} component={MainDrawer} />
     </Stack.Navigator>
   );

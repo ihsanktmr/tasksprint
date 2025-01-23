@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Header } from "app/components/Header";
 import { InternetModal } from "app/components/InternetModal";
+import { ThemedText } from "app/components/ThemedText";
 import { ThemedView } from "app/components/ThemedView";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { HomeScreenNavigationProp } from "app/navigation";
@@ -11,7 +12,7 @@ import { isConnected, setupConnectivityListener } from "app/utils/netCheck";
 import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export function HomeScreen() {
+export function TimerScreen() {
   const iconColor = useThemeColor("background");
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
@@ -59,7 +60,7 @@ export function HomeScreen() {
         leftIcon={<Ionicons name="menu" size={24} color={iconColor} />}
         onLeftPress={handleLeftPress}
       />
-
+      <ThemedText>TIMER</ThemedText>
       <InternetModal
         visible={internetModalVisible}
         onRetry={retryConnection}

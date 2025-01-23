@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 
 import { Ionicons } from "@expo/vector-icons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { DrawerItem } from "@react-navigation/drawer";
@@ -53,7 +54,7 @@ export const TSDrawer: FC<Props> = (props: any) => {
         <DrawerItem
           label="Timer"
           onPress={() => {
-            props.navigation.navigate(SCREEN.HOME);
+            props.navigation.navigate(SCREEN.TIMER);
           }}
           icon={() => (
             <View style={styles.drawerItemIconContainer}>
@@ -62,9 +63,20 @@ export const TSDrawer: FC<Props> = (props: any) => {
           )}
         />
         <DrawerItem
-          label="Focus Log"
+          label="Tasks"
           onPress={() => {
-            props.navigation.navigate("Home");
+            props.navigation.navigate(SCREEN.TASKS);
+          }}
+          icon={() => (
+            <View style={styles.drawerItemIconContainer}>
+              <FontAwesome name="tasks" size={24} color="black" />{" "}
+            </View>
+          )}
+        />
+        <DrawerItem
+          label="Focus Logs"
+          onPress={() => {
+            props.navigation.navigate(SCREEN.FOCUSLOGS);
           }}
           icon={() => (
             <View style={styles.drawerItemIconContainer}>
