@@ -30,7 +30,6 @@ export function NotificationsScreen() {
   return (
     <>
       <Header
-        title="Notifications"
         leftIcon={<Entypo name="chevron-left" size={24} color={iconColor} />}
         onLeftPress={handleGoBack}
       />
