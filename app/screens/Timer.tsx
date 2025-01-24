@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import CountdownTimer from "app/components/CountdownTimer";
 import { Header } from "app/components/Header";
-import { InternetModal } from "app/components/InternetModal";
-import { ThemedText } from "app/components/ThemedText";
 import { ThemedView } from "app/components/ThemedView";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { HomeScreenNavigationProp } from "app/navigation";
-import { isConnected, setupConnectivityListener } from "app/utils/netCheck";
 import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -17,26 +15,6 @@ export function TimerScreen() {
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
   const insets = useSafeAreaInsets();
-
-  const [internetModalVisible, setInternetModalVisible] = useState(false);
-
-  // Effects
-  useEffect(() => {
-    const unsubscribe = setupConnectivityListener((connected) => {
-      setInternetModalVisible(!connected);
-    });
-    return unsubscribe;
-  }, []);
-
-  // Handlers
-  const retryConnection = async () => {
-    try {
-      await isConnected();
-      setInternetModalVisible(false);
-    } catch {
-      setInternetModalVisible(true);
-    }
-  };
 
   const handleLeftPress = () => {
     navigation.openDrawer();
@@ -60,12 +38,7 @@ export function TimerScreen() {
         leftIcon={<Ionicons name="menu" size={24} color={iconColor} />}
         onLeftPress={handleLeftPress}
       />
-      <ThemedText>TIMER</ThemedText>
-      <InternetModal
-        visible={internetModalVisible}
-        onRetry={retryConnection}
-        onDismiss={() => setInternetModalVisible(false)}
-      />
+      <CountdownTimer />
     </ThemedView>
   );
 }
