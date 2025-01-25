@@ -31,7 +31,6 @@ interface Props {
 export const TSDrawer: FC<Props> = (props: any) => {
   const theme = useSelector(selectTheme);
   const dispatch = useDispatch();
-  const backgroundColor = useThemeColor("background");
   const textColor = useThemeColor("text");
 
   const handleRate = () => {

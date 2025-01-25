@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 
+import { distances, radii, typography } from "app/constants/theme";
 import useCountdownTimer from "app/hooks/useCountdownTimer";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Button, StyleSheet, Text, TouchableOpacity } from "react-native";
+
+import { ThemedText } from "./ThemedText";
+import { ThemedView } from "./ThemedView";
 
 const CountdownTimer = () => {
   const [selectedMinutes, setSelectedMinutes] = useState(25);
@@ -14,27 +18,27 @@ const CountdownTimer = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={{ flexDirection: "row" }}>
-        <View style={{ width: 60 }}>
-          <Text style={styles.timerText}>
+    <ThemedView style={styles.container}>
+      <ThemedView style={{ flexDirection: "row" }}>
+        <ThemedView style={styles.timerTextContainer}>
+          <ThemedText type="title">
             {String(time.hours).padStart(2, "0")}:
-          </Text>
-        </View>
-        <View style={{ width: 60 }}>
-          <Text style={styles.timerText}>
+          </ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.timerTextContainer}>
+          <ThemedText type="title">
             {String(time.minutes).padStart(2, "0")}:
-          </Text>
-        </View>
+          </ThemedText>
+        </ThemedView>
 
-        <View style={{ width: 60 }}>
-          <Text style={styles.timerText}>
+        <ThemedView style={styles.timerTextContainer}>
+          <ThemedText type="title">
             {String(time.seconds).padStart(2, "0")}
-          </Text>
-        </View>
-      </View>
+          </ThemedText>
+        </ThemedView>
+      </ThemedView>
 
-      <View style={styles.buttonRow}>
+      <ThemedView style={styles.buttonRow}>
         <TouchableOpacity
           style={[
             styles.timeButton,
@@ -42,7 +46,7 @@ const CountdownTimer = () => {
           ]}
           onPress={() => handleTimeChange(25)}
         >
-          <Text style={styles.timeButtonText}>25 Min</Text>
+          <ThemedText style={styles.timeButtonThemedText}>25 Min</ThemedText>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
@@ -51,7 +55,7 @@ const CountdownTimer = () => {
           ]}
           onPress={() => handleTimeChange(60)}
         >
-          <Text style={styles.timeButtonText}>1 Hour</Text>
+          <ThemedText style={styles.timeButtonThemedText}>1 Hour</ThemedText>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
@@ -60,7 +64,7 @@ const CountdownTimer = () => {
           ]}
           onPress={() => handleTimeChange(120)}
         >
-          <Text style={styles.timeButtonText}>2 Hours</Text>
+          <ThemedText style={styles.timeButtonThemedText}>2 Hours</ThemedText>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
@@ -69,16 +73,16 @@ const CountdownTimer = () => {
           ]}
           onPress={() => handleTimeChange(180)}
         >
-          <Text style={styles.timeButtonText}>3 Hours</Text>
+          <ThemedText style={styles.timeButtonThemedText}>3 Hours</ThemedText>
         </TouchableOpacity>
-      </View>
+      </ThemedView>
 
-      <View style={styles.controlButtons}>
+      <ThemedView style={styles.controlButtons}>
         <Button title="Start" onPress={startTimer} />
         <Button title="Pause" onPress={pauseTimer} />
         <Button title="Reset" onPress={() => resetTimer(selectedMinutes)} />
-      </View>
-    </View>
+      </ThemedView>
+    </ThemedView>
   );
 };
 
@@ -88,34 +92,31 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  timerText: {
-    marginRight: 3,
-    fontSize: 36,
-    fontWeight: "bold",
-    marginBottom: 20,
+  timerTextContainer: {
+    width: 52,
   },
   buttonRow: {
+    width: "100%",
+    paddingHorizontal: distances.md,
+    justifyContent: "space-between",
     flexDirection: "row",
-    marginBottom: 20,
-    gap: 10,
+    marginBottom: distances.xl,
   },
   timeButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: distances.md,
     backgroundColor: "#dcdcdc",
-    borderRadius: 5,
-    marginHorizontal: 5,
+    borderRadius: radii.md,
   },
   timeButtonActive: {
     backgroundColor: "#4caf50",
   },
-  timeButtonText: {
-    color: "white",
-    fontWeight: "bold",
+  timeButtonThemedText: {
+    fontSize: 16,
+    fontFamily: typography.primary.bold,
   },
   controlButtons: {
     flexDirection: "row",
-    gap: 10,
+    gap: distances.md,
   },
 });
 
