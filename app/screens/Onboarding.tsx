@@ -12,7 +12,7 @@ import { i18n } from "app/locale";
 import { OnboardingScreenNavigationProp } from "app/navigation";
 import { setOnboardingSeen } from "app/state/misc/actions";
 import { triggerHeavyFeedback } from "app/utils/haptics";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import Swiper from "react-native-swiper";
 import { useDispatch } from "react-redux";
 
@@ -41,7 +41,7 @@ export function OnboardingScreen() {
           backgroundColor: "#007bff",
         }}
       >
-        <View style={styles.slide}>
+        <ThemedView style={styles.slide}>
           <Image
             source={require("../../assets/images/onboarding-image.png")}
             style={styles.image}
@@ -56,9 +56,9 @@ export function OnboardingScreen() {
           >
             {i18n.t("onboardingDescription1")}
           </ThemedText>
-        </View>
+        </ThemedView>
 
-        <View style={styles.slide}>
+        <ThemedView style={styles.slide}>
           <Image
             source={require("../../assets/images/onboarding-image2.png")}
             style={styles.image}
@@ -73,9 +73,9 @@ export function OnboardingScreen() {
           >
             {i18n.t("onboardingDescription2")}
           </ThemedText>
-        </View>
+        </ThemedView>
 
-        <View style={styles.slide}>
+        <ThemedView style={styles.slide}>
           <Image
             source={require("../../assets/images/onboarding-image3.png")}
             style={styles.image}
@@ -90,7 +90,7 @@ export function OnboardingScreen() {
           >
             {i18n.t("onboardingDescription3")}
           </ThemedText>
-        </View>
+        </ThemedView>
       </Swiper>
 
       <ThemedView style={styles.buttonContainer}>

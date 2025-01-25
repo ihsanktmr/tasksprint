@@ -1,5 +1,6 @@
 const en = {
   welcome: "Welcome!",
+  drawerSubtitle: "Speed up productivity! 🚀!",
   notifications: "Notifications",
   begin: "Begin",
   onboardingTitle1: "Customize Your Timer",
