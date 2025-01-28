@@ -1,6 +1,7 @@
 import React from "react";
-import { View, StyleSheet, Text, ViewStyle, StyleProp } from "react-native";
-import { ProgressBar, MD3Colors } from "react-native-paper";
+
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from "react-native";
+import { MD3Colors, ProgressBar } from "react-native-paper";
 
 interface ProgressBarWithLabelProps {
   progress: number; // Progress value between 0 and 1
@@ -13,8 +14,8 @@ interface ProgressBarWithLabelProps {
 
 const ProgressBarWithLabel: React.FC<ProgressBarWithLabelProps> = ({
   progress,
-  color = 'grey', // Default color
-  backgroundColor = 'green', // Default background color
+  color = "grey", // Default color
+  backgroundColor = "green", // Default background color
   labelStyle,
   barStyle,
   showPercentage = true,
@@ -24,21 +25,19 @@ const ProgressBarWithLabel: React.FC<ProgressBarWithLabelProps> = ({
 
   return (
     <View style={[styles.container, barStyle]}>
-      {/* Progress Bar */}
       <ProgressBar
         progress={clampedProgress}
         color={color}
         style={[styles.progressBar, { backgroundColor }]}
       />
 
-      {/* Percentage Labels */}
       {showPercentage && (
         <View style={[styles.labelContainer, labelStyle]}>
           <Text style={styles.percentageText}>{`${Math.round(
-            clampedProgress * 100
+            clampedProgress * 100,
           )}% Filled`}</Text>
           <Text style={styles.percentageText}>{`${Math.round(
-            (1 - clampedProgress) * 100
+            (1 - clampedProgress) * 100,
           )}% Remaining`}</Text>
         </View>
       )}
