@@ -19,12 +19,17 @@ const CountdownTimer = () => {
   const textColor = useThemeColor("text");
   const backgroundColor = useThemeColor("background");
 
-  const [selectedMinutes, setSelectedMinutes] = useState(25);
+  const [selectedMinutes, setSelectedMinutes] = useState<number>(25);
+  const [focusEnd, setFocusEnd] = useState<boolean>(false);
+
+  const onEnd = () => {
+    setFocusEnd(true);
+  };
+
   const { time, isPlaying, startTimer, pauseTimer, resetTimer } =
-    useCountdownTimer(selectedMinutes);
+    useCountdownTimer(selectedMinutes, onEnd);
 
   const [progress, setProgress] = useState(0);
-
   useEffect(() => {
     // Calculate the elapsed time in seconds
     if (isPlaying) {
@@ -48,30 +53,37 @@ const CountdownTimer = () => {
     setProgress(0);
   };
 
+  const resetTimerAction = () => {
+    resetTimer(selectedMinutes);
+    setProgress(0);
+    setFocusEnd(false);
+  };
+
   const renderControlButtons = () => {
     return (
       <ThemedView style={styles.buttonRow}>
-        {isPlaying ? (
-          <TimerButton
-            iconName="pause"
-            onPress={pauseTimer}
-            label="Pause"
-            color="orange"
-            size={30}
-          />
-        ) : (
-          <TimerButton
-            iconName="play"
-            onPress={startTimer}
-            label="Start"
-            color="green"
-            size={30}
-          />
-        )}
+        {!focusEnd &&
+          (isPlaying ? (
+            <TimerButton
+              iconName="pause"
+              onPress={pauseTimer}
+              label="Pause"
+              color="orange"
+              size={30}
+            />
+          ) : (
+            <TimerButton
+              iconName="play"
+              onPress={startTimer}
+              label="Start"
+              color="green"
+              size={30}
+            />
+          ))}
         <View style={{ width: 10 }} />
         <TimerButton
           iconName="refresh"
-          onPress={() => resetTimer(selectedMinutes)}
+          onPress={resetTimerAction}
           label="Reset"
           color="blue"
           size={30}
@@ -105,7 +117,7 @@ const CountdownTimer = () => {
       />
 
       <ThemedView style={styles.buttonRow}>
-        {[25, 60, 120, 180].map((minutes) => (
+        {[1, 25, 60, 120, 180].map((minutes) => (
           <TouchableOpacity
             key={minutes}
             style={[

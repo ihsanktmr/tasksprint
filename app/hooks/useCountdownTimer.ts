@@ -7,7 +7,7 @@ interface TimerState {
   milliseconds: number;
 }
 
-const useCountdownTimer = (initialMinutes: number) => {
+const useCountdownTimer = (initialMinutes: number, onEnd: () => void) => {
   const [time, setTime] = useState<TimerState>(() => {
     const hours = Math.floor(initialMinutes / 60);
     const minutes = initialMinutes % 60;
@@ -47,6 +47,8 @@ const useCountdownTimer = (initialMinutes: number) => {
 
         if (newHours < 0) {
           pauseTimer();
+          if (onEnd) onEnd(); // Trigger the onEnd callback
+
           return { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 };
         }
 
