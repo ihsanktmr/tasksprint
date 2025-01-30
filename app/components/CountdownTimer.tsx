@@ -7,6 +7,7 @@ import {
   typography,
 } from "app/constants/theme";
 import useCountdownTimer from "app/hooks/useCountdownTimer";
+import { useThemeColor } from "app/hooks/useThemeColor";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import ProgressBarWithLabel from "./ProgressBarWithLabel";
@@ -15,6 +16,9 @@ import { ThemedView } from "./ThemedView";
 import TimerButton from "./TimerButton";
 
 const CountdownTimer = () => {
+  const textColor = useThemeColor("text");
+  const backgroundColor = useThemeColor("background");
+
   const [selectedMinutes, setSelectedMinutes] = useState(25);
   const { time, isPlaying, startTimer, pauseTimer, resetTimer } =
     useCountdownTimer(selectedMinutes);
@@ -87,13 +91,15 @@ const CountdownTimer = () => {
           <TouchableOpacity
             key={minutes}
             style={[
-              styles.timeButton,
+              { ...styles.timeButton, backgroundColor },
               selectedMinutes === minutes && styles.timeButtonActive,
             ]}
             onPress={() => handleTimeChange(minutes)}
             disabled={isPlaying}
           >
-            <ThemedText style={styles.timeButtonThemedText}>
+            <ThemedText
+              style={{ ...styles.timeButtonThemedText, color: textColor }}
+            >
               {minutes >= 60 ? `${minutes / 60} Hour` : `${minutes} Min`}
             </ThemedText>
           </TouchableOpacity>
@@ -119,8 +125,8 @@ const styles = StyleSheet.create({
   },
   timeButton: {
     paddingHorizontal: distances.xs,
-    backgroundColor: "#dcdcdc",
-    borderRadius: radii.md,
+    paddingVertical: distances.xxs,
+    borderRadius: radii.lg,
   },
   timeButtonActive: {
     backgroundColor: "#4caf50",
