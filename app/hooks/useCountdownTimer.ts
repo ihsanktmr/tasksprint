@@ -13,11 +13,14 @@ const useCountdownTimer = (initialMinutes: number) => {
     const minutes = initialMinutes % 60;
     return { hours, minutes, seconds: 0, milliseconds: 0 };
   });
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const startTimer = () => {
     if (timerRef.current) return; // Prevent multiple timers
+    setIsPlaying(true);
+
     timerRef.current = setInterval(() => {
       setTime((prevTime) => {
         const { hours, minutes, seconds, milliseconds } = prevTime;
@@ -61,6 +64,7 @@ const useCountdownTimer = (initialMinutes: number) => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;
+      setIsPlaying(false);
     }
   };
 
@@ -81,6 +85,7 @@ const useCountdownTimer = (initialMinutes: number) => {
 
   return {
     time,
+    isPlaying,
     startTimer,
     pauseTimer,
     resetTimer,

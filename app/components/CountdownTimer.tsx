@@ -1,86 +1,103 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { distances, radii, typography } from "app/constants/theme";
+import {
+  distances,
+  genericSpacing,
+  radii,
+  typography,
+} from "app/constants/theme";
 import useCountdownTimer from "app/hooks/useCountdownTimer";
-import { Button, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
+import ProgressBarWithLabel from "./ProgressBarWithLabel";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
+import TimerButton from "./TimerButton";
 
 const CountdownTimer = () => {
   const [selectedMinutes, setSelectedMinutes] = useState(25);
-  const { time, startTimer, pauseTimer, resetTimer } =
+  const { time, isPlaying, startTimer, pauseTimer, resetTimer } =
     useCountdownTimer(selectedMinutes);
+
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    // Calculate the elapsed time in seconds
+    if (isPlaying) {
+      const totalTimeInSeconds = selectedMinutes * 60;
+      const elapsedTimeInSeconds =
+        totalTimeInSeconds -
+        (time.hours * 60 * 60 + time.minutes * 60 + time.seconds);
+
+      const progressPercentage = Math.max(
+        0,
+        Math.min(elapsedTimeInSeconds / totalTimeInSeconds, 1),
+      );
+
+      setProgress(progressPercentage);
+    }
+  }, [isPlaying, time, selectedMinutes]);
 
   const handleTimeChange = (minutes: number) => {
     setSelectedMinutes(minutes);
     resetTimer(minutes);
+    setProgress(0);
   };
 
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={{ flexDirection: "row" }}>
-        <ThemedView style={styles.timerTextContainer}>
-          <ThemedText type="title">
-            {String(time.hours).padStart(2, "0")}:
-          </ThemedText>
-        </ThemedView>
-        <ThemedView style={styles.timerTextContainer}>
-          <ThemedText type="title">
-            {String(time.minutes).padStart(2, "0")}:
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedView style={styles.timerTextContainer}>
-          <ThemedText type="title">
-            {String(time.seconds).padStart(2, "0")}
-          </ThemedText>
-        </ThemedView>
+        <ThemedText type="title">
+          {String(time.hours).padStart(2, "0")}:
+          {String(time.minutes).padStart(2, "0")}:
+          {String(time.seconds).padStart(2, "0")}
+        </ThemedText>
       </ThemedView>
-
+      <ProgressBarWithLabel
+        progress={progress}
+        color="blue"
+        backgroundColor="lightgray"
+        showPercentage={true}
+      />
       <ThemedView style={styles.buttonRow}>
-        <TouchableOpacity
-          style={[
-            styles.timeButton,
-            selectedMinutes === 25 && styles.timeButtonActive,
-          ]}
-          onPress={() => handleTimeChange(25)}
-        >
-          <ThemedText style={styles.timeButtonThemedText}>25 Min</ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.timeButton,
-            selectedMinutes === 60 && styles.timeButtonActive,
-          ]}
-          onPress={() => handleTimeChange(60)}
-        >
-          <ThemedText style={styles.timeButtonThemedText}>1 Hour</ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.timeButton,
-            selectedMinutes === 120 && styles.timeButtonActive,
-          ]}
-          onPress={() => handleTimeChange(120)}
-        >
-          <ThemedText style={styles.timeButtonThemedText}>2 Hours</ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.timeButton,
-            selectedMinutes === 180 && styles.timeButtonActive,
-          ]}
-          onPress={() => handleTimeChange(180)}
-        >
-          <ThemedText style={styles.timeButtonThemedText}>3 Hours</ThemedText>
-        </TouchableOpacity>
+        <TimerButton
+          iconName="play"
+          onPress={startTimer}
+          label="Start"
+          color="green"
+          size={30}
+        />
+        <TimerButton
+          iconName="pause"
+          onPress={pauseTimer}
+          label="Pause"
+          color="orange"
+          size={30}
+        />
+        <TimerButton
+          iconName="refresh"
+          onPress={() => resetTimer(selectedMinutes)}
+          label="Reset"
+          color="blue"
+          size={30}
+        />
       </ThemedView>
-
-      <ThemedView style={styles.controlButtons}>
-        <Button title="Start" onPress={startTimer} />
-        <Button title="Pause" onPress={pauseTimer} />
-        <Button title="Reset" onPress={() => resetTimer(selectedMinutes)} />
+      <ThemedView style={styles.buttonRow}>
+        {[25, 60, 120, 180].map((minutes) => (
+          <TouchableOpacity
+            key={minutes}
+            style={[
+              styles.timeButton,
+              selectedMinutes === minutes && styles.timeButtonActive,
+            ]}
+            onPress={() => handleTimeChange(minutes)}
+            disabled={isPlaying}
+          >
+            <ThemedText style={styles.timeButtonThemedText}>
+              {minutes >= 60 ? `${minutes / 60} Hour` : `${minutes} Min`}
+            </ThemedText>
+          </TouchableOpacity>
+        ))}
       </ThemedView>
     </ThemedView>
   );
@@ -91,9 +108,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  timerTextContainer: {
-    width: 52,
+    paddingHorizontal: genericSpacing,
   },
   buttonRow: {
     width: "100%",
@@ -103,7 +118,7 @@ const styles = StyleSheet.create({
     marginBottom: distances.xl,
   },
   timeButton: {
-    paddingHorizontal: distances.md,
+    paddingHorizontal: distances.xs,
     backgroundColor: "#dcdcdc",
     borderRadius: radii.md,
   },
