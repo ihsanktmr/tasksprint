@@ -1,7 +1,9 @@
 import React from "react";
 
+import { distances, radii, typography } from "app/constants/theme";
+import { useThemeColor } from "app/hooks/useThemeColor";
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from "react-native";
-import { MD3Colors, ProgressBar } from "react-native-paper";
+import { ProgressBar } from "react-native-paper";
 
 interface ProgressBarWithLabelProps {
   progress: number; // Progress value between 0 and 1
@@ -22,6 +24,7 @@ const ProgressBarWithLabel: React.FC<ProgressBarWithLabelProps> = ({
 }) => {
   // Clamp the progress value between 0 and 1
   const clampedProgress = Math.min(Math.max(progress, 0), 1);
+  const textColor = useThemeColor("text");
 
   return (
     <View style={[styles.container, barStyle]}>
@@ -33,12 +36,12 @@ const ProgressBarWithLabel: React.FC<ProgressBarWithLabelProps> = ({
 
       {showPercentage && (
         <View style={[styles.labelContainer, labelStyle]}>
-          <Text style={styles.percentageText}>{`${Math.round(
-            clampedProgress * 100,
-          )}% Filled`}</Text>
-          <Text style={styles.percentageText}>{`${Math.round(
-            (1 - clampedProgress) * 100,
-          )}% Remaining`}</Text>
+          <Text
+            style={{ ...styles.percentageText, color: textColor }}
+          >{`${Math.round(clampedProgress * 100)}% Focused`}</Text>
+          <Text
+            style={{ ...styles.percentageText, color: textColor }}
+          >{`${Math.round((1 - clampedProgress) * 100)}% Remaining`}</Text>
         </View>
       )}
     </View>
@@ -47,21 +50,21 @@ const ProgressBarWithLabel: React.FC<ProgressBarWithLabelProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 16,
+    marginVertical: distances.md,
     width: "100%",
   },
   progressBar: {
-    height: 10,
-    borderRadius: 5,
+    height: 18,
+    borderRadius: radii.full,
   },
   labelContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 8,
+    marginTop: distances.md,
   },
   percentageText: {
     fontSize: 14,
-    color: MD3Colors.neutralVariant50,
+    fontFamily: typography.primary.bold,
   },
 });
 

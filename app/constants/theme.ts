@@ -13,7 +13,7 @@ import { Dimensions } from "react-native";
 
 // Common
 export const { width, height } = Dimensions.get("window");
-export const genericSpacing = width * 0.075;
+export const genericSpacing = width * 0.055;
 export const genericWidth = width * 0.85;
 
 export const iconVariants = {
