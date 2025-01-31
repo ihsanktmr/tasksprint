@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import { triggerMediumFeedback } from "app/utils/haptics";
+
 interface TimerState {
   hours: number;
   minutes: number;
@@ -47,6 +49,7 @@ const useCountdownTimer = (initialMinutes: number, onEnd: () => void) => {
 
         if (newHours < 0) {
           pauseTimer();
+          triggerMediumFeedback();
           if (onEnd) onEnd(); // Trigger the onEnd callback
 
           return { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 };

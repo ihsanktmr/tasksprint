@@ -3,34 +3,26 @@ import React from "react";
 import { ThemedText } from "app/components/ThemedText";
 import { typography } from "app/constants/theme";
 import { useThemeColor } from "app/hooks/useThemeColor";
+import { FocusState } from "app/state/board/types";
 import { FlatList, StyleSheet } from "react-native";
 
-import NotificationComponent from "./NotificationComponent";
+import FocusListItem from "./FocusListItem";
 
-interface Notification {
-  id: string;
-  message: string;
-  timestamp: string; // ISO string format
-  iconName: string;
+interface FocusListProps {
+  data: FocusState[];
 }
 
-interface NotificationListProps {
-  notifications: Notification[];
-}
-
-const NotificationList: React.FC<NotificationListProps> = ({
-  notifications,
-}) => {
+const FocusList: React.FC<FocusListProps> = ({ data }) => {
   const backgroundColor = useThemeColor("background");
 
   return (
     <FlatList
-      data={notifications}
-      renderItem={({ item }) => <NotificationComponent notification={item} />}
-      keyExtractor={(item) => item.id}
+      data={data}
+      renderItem={({ item }) => <FocusListItem item={item} />}
+      keyExtractor={(item) => item.startDate.toString()}
       ListEmptyComponent={
         <ThemedText style={styles.emptyMessage}>
-          No notifications available.
+          No focus logs found.
         </ThemedText>
       }
       contentContainerStyle={[styles.contentContainer, { backgroundColor }]}
@@ -56,4 +48,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationList;
+export default FocusList;

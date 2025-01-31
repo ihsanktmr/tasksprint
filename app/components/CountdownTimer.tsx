@@ -8,14 +8,26 @@ import {
 } from "app/constants/theme";
 import useCountdownTimer from "app/hooks/useCountdownTimer";
 import { useThemeColor } from "app/hooks/useThemeColor";
+import { addFocus } from "app/state/board/actions";
+import { FocusState } from "app/state/board/types";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { useDispatch } from "react-redux";
 
 import ProgressBarWithLabel from "./ProgressBarWithLabel";
 import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
 import TimerButton from "./TimerButton";
 
+const focusSession: FocusState = {
+  span: 3600, // 1 hour in seconds
+  startDate: new Date("2025-01-31T09:00:00Z"),
+  endDate: new Date("2025-01-31T10:00:00Z"),
+  note: "Focused on writing the project report",
+};
+
 const CountdownTimer = () => {
+  const dispatch = useDispatch();
+
   const textColor = useThemeColor("text");
   const backgroundColor = useThemeColor("background");
 
@@ -24,12 +36,14 @@ const CountdownTimer = () => {
 
   const onEnd = () => {
     setFocusEnd(true);
+    dispatch(addFocus(focusSession));
+    alert("END");
   };
-
   const { time, isPlaying, startTimer, pauseTimer, resetTimer } =
     useCountdownTimer(selectedMinutes, onEnd);
 
   const [progress, setProgress] = useState(0);
+
   useEffect(() => {
     // Calculate the elapsed time in seconds
     if (isPlaying) {

@@ -10,6 +10,7 @@ import {
   persistStore,
 } from "redux-persist";
 
+import boardReducer from "./board/reducers";
 import languageReducer from "./language/reducers";
 import miscReducer from "./misc/reducers";
 import { persistStorage } from "./persistStorage";
@@ -20,6 +21,7 @@ const rootReducer = {
   misc: miscReducer,
   theme: themeReducer,
   language: languageReducer,
+  board: boardReducer,
 };
 
 const persistConfig = {
