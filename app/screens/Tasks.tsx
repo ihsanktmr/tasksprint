@@ -2,6 +2,7 @@ import React from "react";
 
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { FABButton } from "app/components/FABButton";
 import { Header } from "app/components/Header";
 import { ThemedText } from "app/components/ThemedText";
 import { useThemeColor } from "app/hooks/useThemeColor";
@@ -15,6 +16,8 @@ export function TasksScreen() {
     navigation.openDrawer();
   };
 
+  const handleFABPress = () => alert("true");
+
   return (
     <>
       <Header
@@ -22,6 +25,7 @@ export function TasksScreen() {
         onLeftPress={handleLeftPress}
       />
       <ThemedText>TASKS</ThemedText>
+      <FABButton onPress={handleFABPress} icon="plus" />
     </>
   );
 }
