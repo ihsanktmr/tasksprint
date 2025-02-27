@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import {
   distances,
@@ -18,104 +18,85 @@ import { ThemedText } from "./ThemedText";
 import { ThemedView } from "./ThemedView";
 import TimerButton from "./TimerButton";
 
-const focusSession: FocusState = {
+const DEFAULT_FOCUS_SESSION: FocusState = {
   span: 3600, // 1 hour in seconds
   startDate: new Date("2025-01-31T09:00:00Z"),
   endDate: new Date("2025-01-31T10:00:00Z"),
   note: "Focused on writing the project report",
 };
 
+const PRESET_TIMES = [1, 25, 60, 120, 180];
+
 const CountdownTimer = () => {
   const dispatch = useDispatch();
-
   const textColor = useThemeColor("text");
   const backgroundColor = useThemeColor("background");
 
-  const [selectedMinutes, setSelectedMinutes] = useState<number>(25);
-  const [focusEnd, setFocusEnd] = useState<boolean>(false);
+  const [selectedMinutes, setSelectedMinutes] = useState(25);
+  const [focusEnded, setFocusEnded] = useState(false);
 
   const onEnd = () => {
-    setFocusEnd(true);
-    dispatch(addFocus(focusSession));
+    setFocusEnded(true);
+    dispatch(addFocus(DEFAULT_FOCUS_SESSION));
     alert("END");
   };
+
   const { time, isPlaying, startTimer, pauseTimer, resetTimer } =
     useCountdownTimer(selectedMinutes, onEnd);
 
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    // Calculate the elapsed time in seconds
-    if (isPlaying) {
-      const totalTimeInSeconds = selectedMinutes * 60;
-      const elapsedTimeInSeconds =
-        totalTimeInSeconds -
-        (time.hours * 60 * 60 + time.minutes * 60 + time.seconds);
-
-      const progressPercentage = Math.max(
-        0,
-        Math.min(elapsedTimeInSeconds / totalTimeInSeconds, 1),
-      );
-
-      setProgress(progressPercentage);
-    }
+  const progress = useMemo(() => {
+    if (!isPlaying) return 0;
+    const totalSeconds = selectedMinutes * 60;
+    const elapsedSeconds =
+      totalSeconds - (time.hours * 3600 + time.minutes * 60 + time.seconds);
+    return Math.min(elapsedSeconds / totalSeconds, 1);
   }, [isPlaying, time, selectedMinutes]);
 
   const handleTimeChange = (minutes: number) => {
     setSelectedMinutes(minutes);
     resetTimer(minutes);
-    setProgress(0);
+    setFocusEnded(false);
   };
 
-  const resetTimerAction = () => {
+  const handleReset = () => {
     resetTimer(selectedMinutes);
-    setProgress(0);
-    setFocusEnd(false);
+    setFocusEnded(false);
   };
 
-  const renderControlButtons = () => {
-    return (
-      <ThemedView style={styles.buttonRow}>
-        {!focusEnd &&
-          (isPlaying ? (
-            <TimerButton
-              iconName="pause"
-              onPress={pauseTimer}
-              label="Pause"
-              color="orange"
-              size={30}
-            />
-          ) : (
-            <TimerButton
-              iconName="play"
-              onPress={startTimer}
-              label="Start"
-              color="green"
-              size={30}
-            />
-          ))}
-        <View style={{ width: 10 }} />
-        <TimerButton
-          iconName="refresh"
-          onPress={resetTimerAction}
-          label="Reset"
-          color="blue"
-          size={30}
-        />
-      </ThemedView>
-    );
-  };
+  const renderControlButtons = () => (
+    <ThemedView style={styles.buttonRow}>
+      {!focusEnded &&
+        (isPlaying ? (
+          <TimerButton
+            iconName="pause"
+            onPress={pauseTimer}
+            label="Pause"
+            color="orange"
+            size={30}
+          />
+        ) : (
+          <TimerButton
+            iconName="play"
+            onPress={startTimer}
+            label="Start"
+            color="green"
+            size={30}
+          />
+        ))}
+      <View style={styles.buttonSpacer} />
+      <TimerButton
+        iconName="refresh"
+        onPress={handleReset}
+        label="Reset"
+        color="blue"
+        size={30}
+      />
+    </ThemedView>
+  );
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedView
-        style={{
-          width: "100%",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-      >
+      <ThemedView style={styles.timerRow}>
         <ThemedText type="title">
           {String(time.hours).padStart(2, "0")}:
           {String(time.minutes).padStart(2, "0")}:
@@ -123,27 +104,27 @@ const CountdownTimer = () => {
         </ThemedText>
         {renderControlButtons()}
       </ThemedView>
+
       <ProgressBarWithLabel
         progress={progress}
         color="blue"
         backgroundColor="lightgray"
-        showPercentage={true}
+        showPercentage
       />
 
       <ThemedView style={styles.buttonRow}>
-        {[1, 25, 60, 120, 180].map((minutes) => (
+        {PRESET_TIMES.map((minutes) => (
           <TouchableOpacity
             key={minutes}
             style={[
-              { ...styles.timeButton, backgroundColor },
+              styles.timeButton,
+              { backgroundColor },
               selectedMinutes === minutes && styles.timeButtonActive,
             ]}
             onPress={() => handleTimeChange(minutes)}
             disabled={isPlaying}
           >
-            <ThemedText
-              style={{ ...styles.timeButtonThemedText, color: textColor }}
-            >
+            <ThemedText style={[styles.timeButtonText, { color: textColor }]}>
               {minutes >= 60 ? `${minutes / 60} Hour` : `${minutes} Min`}
             </ThemedText>
           </TouchableOpacity>
@@ -160,8 +141,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: genericSpacing,
   },
+  timerRow: {
+    width: "100%",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+  },
   buttonRow: {
     flexDirection: "row",
+  },
+  buttonSpacer: {
+    width: 10,
   },
   timeButton: {
     paddingHorizontal: distances.xs,
@@ -171,13 +161,9 @@ const styles = StyleSheet.create({
   timeButtonActive: {
     backgroundColor: "#4caf50",
   },
-  timeButtonThemedText: {
+  timeButtonText: {
     fontSize: 16,
     fontFamily: typography.primary.bold,
-  },
-  controlButtons: {
-    flexDirection: "row",
-    gap: distances.md,
   },
 });
 
