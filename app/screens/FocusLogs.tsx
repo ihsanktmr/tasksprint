@@ -15,6 +15,7 @@ export function FocusLogsScreen() {
 
   const navigation = useNavigation<HomeScreenNavigationProp>();
   const iconColor = useThemeColor("icon");
+  const backgroundColor = useThemeColor("background");
 
   const handleLeftPress = () => {
     navigation.openDrawer();
@@ -27,7 +28,12 @@ export function FocusLogsScreen() {
         onLeftPress={handleLeftPress}
       />
       <ThemedText
-        style={{ fontSize: 20, textAlign: "center", marginVertical: 10 }}
+        style={{
+          fontSize: 20,
+          textAlign: "center",
+          backgroundColor: backgroundColor,
+          paddingBottom: 20,
+        }}
       >
         Focus Logs
       </ThemedText>

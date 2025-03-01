@@ -1,7 +1,8 @@
 import React from "react";
-import { ThemedView } from "app/components/ThemedView";
+
 import { ThemedText } from "app/components/ThemedText";
-import { distances, radii, typography } from "app/constants/theme";
+import { ThemedView } from "app/components/ThemedView";
+import { distances, radii, shadowProps, typography } from "app/constants/theme";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { FocusState } from "app/state/board/types";
 import { StyleSheet, TouchableOpacity } from "react-native";
@@ -10,25 +11,37 @@ interface FocusListItemProps {
   item: FocusState;
 }
 
-const FocusListItem: React.FC<FocusListItemProps> = ({ item }) => {
+const FocusListItem: React.FC<FocusListItemProps> = React.memo(({ item }) => {
   const textColor = useThemeColor("text");
+  const backgroundColor = useThemeColor("background");
 
   return (
-    <TouchableOpacity style={styles.focusItem}>
+    <TouchableOpacity
+      style={[styles.focusItem, { backgroundColor }, shadowProps]}
+      activeOpacity={0.7}
+    >
       <ThemedView style={styles.focusItemInner}>
         <ThemedView style={styles.textContainer}>
-          <ThemedText style={[styles.message, { color: textColor }]}>
+          <ThemedText
+            style={[styles.message, { color: textColor }]}
+            numberOfLines={2}
+          >
             {item.note}
           </ThemedText>
           <ThemedText style={[styles.timestamp, { color: textColor }]}>
-            {new Date(item.startDate).toLocaleTimeString()} -{" "}
-            {new Date(item.endDate).toLocaleTimeString()}
+            {formatTimeRange(item.startDate, item.endDate)}
           </ThemedText>
         </ThemedView>
       </ThemedView>
     </TouchableOpacity>
   );
-};
+});
+
+const formatTimeRange = (
+  start: string | number | Date,
+  end: string | number | Date,
+) =>
+  `${new Date(start).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} - ${new Date(end).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
 
 const styles = StyleSheet.create({
   focusItem: {
@@ -37,7 +50,6 @@ const styles = StyleSheet.create({
     marginBottom: distances.sm,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "white",
   },
   focusItemInner: {
     flexDirection: "row",
@@ -55,6 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: typography.secondary.regular,
     marginTop: distances.xxs,
+    opacity: 0.7,
   },
 });
 

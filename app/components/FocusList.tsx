@@ -4,7 +4,7 @@ import { ThemedText } from "app/components/ThemedText";
 import { typography } from "app/constants/theme";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { FocusState } from "app/state/board/types";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
 import FocusListItem from "./FocusListItem";
 
@@ -21,9 +21,11 @@ const FocusList: React.FC<FocusListProps> = ({ data }) => {
       renderItem={({ item }) => <FocusListItem item={item} />}
       keyExtractor={(item) => item.startDate.toString()}
       ListEmptyComponent={
-        <ThemedText style={styles.emptyMessage}>
-          No focus logs found.
-        </ThemedText>
+        <View style={styles.emptyContainer}>
+          <ThemedText style={styles.emptyMessage}>
+            No focus logs found.
+          </ThemedText>
+        </View>
       }
       contentContainerStyle={[styles.contentContainer, { backgroundColor }]}
       style={[styles.container, { backgroundColor }]}
@@ -39,12 +41,19 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 10,
     paddingBottom: 30,
+    flexGrow: 1,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 20,
   },
   emptyMessage: {
     textAlign: "center",
     fontSize: 16,
     fontFamily: typography.primary.bold,
-    width: "100%",
+    opacity: 0.7, 
   },
 });
 
