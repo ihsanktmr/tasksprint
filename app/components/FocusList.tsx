@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ThemedText } from "app/components/ThemedText";
-import { typography } from "app/constants/theme";
+import { distances, typography } from "app/constants/theme";
 import { useThemeColor } from "app/hooks/useThemeColor";
 import { FocusState } from "app/state/board/types";
 import { FlatList, StyleSheet, View } from "react-native";
@@ -39,21 +39,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    paddingTop: 10,
-    paddingBottom: 30,
+    paddingTop: distances.sm,
+    paddingBottom: distances.lg,
     flexGrow: 1,
   },
   emptyContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 20,
+    paddingVertical: distances.sm,
   },
   emptyMessage: {
     textAlign: "center",
     fontSize: 16,
     fontFamily: typography.primary.bold,
-    opacity: 0.7, 
+    opacity: 0.7,
   },
 });
 
